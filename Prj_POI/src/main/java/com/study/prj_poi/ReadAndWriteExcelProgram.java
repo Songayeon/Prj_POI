@@ -1,5 +1,6 @@
 package com.study.prj_poi;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
@@ -21,12 +22,29 @@ public class ReadAndWriteExcelProgram {
 		String version = "xls";
 //		String version = "xlsx";
 		
+		
 		// Workbook 취득
-		Workbook workbook = getWorkbook("C:\\Dev_Info\\work\\SampleTest.xls", version);
+//		Workbook workbook = getWorkbook("C:\\Dev_Info\\work\\SampleTest.xls", version);
+		String fileName = "C:/Dev_Info/work/SampleTest.xls";
+		fileName = fileName.replace("/", File.separator);
+		
+		Workbook workbook = getWorkbook(fileName, version);
 		
 		
 		// Workbook 안에 시트 취득
 		Sheet sheet = workbook.getSheetAt(0);
+		/* 
+		 org.apache.poi.poifs.filesystem.NotOLE2FileException: Invalid header signature; read 0x3430304153444353, expected 0xE11AB1A1E011CFD0 - Your file appears not to be a valid OLE2 document
+	at org.apache.poi.poifs.storage.HeaderBlock.<init>(HeaderBlock.java:151)
+	at org.apache.poi.poifs.storage.HeaderBlock.<init>(HeaderBlock.java:117)
+	at org.apache.poi.poifs.filesystem.POIFSFileSystem.<init>(POIFSFileSystem.java:285)
+	at org.apache.poi.hssf.usermodel.HSSFWorkbook.<init>(HSSFWorkbook.java:400)
+	at org.apache.poi.hssf.usermodel.HSSFWorkbook.<init>(HSSFWorkbook.java:381)
+	at com.study.prj_poi.ReadAndWriteExcelProgram.getWorkbook(ReadAndWriteExcelProgram.java:113)
+	at com.study.prj_poi.ReadAndWriteExcelProgram.<init>(ReadAndWriteExcelProgram.java:25)
+	at com.study.prj_poi.ReadAndWriteExcelProgram.main(ReadAndWriteExcelProgram.java:16)
+
+		 */
 		
 		
 		// Sheet 에서 셀 취득 후 데이터 설정
