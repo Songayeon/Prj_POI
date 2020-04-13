@@ -23,12 +23,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  */
 
-public class Program {
+public class WriteExcelProgram{
 	public static void main(String... args) {
-		new Program();
+		new WriteExcelProgram();
 	}
 	
-	public Program() {
+	public WriteExcelProgram() {
 		
 		String version = "xls";
 //		String version = "xlsx";
@@ -38,62 +38,66 @@ public class Program {
 		
 		
 		// Workbook 안에 시트 생성
-		Sheet sheet = workbook.createSheet("Test Sheet");
+		Sheet sheet = workbook.createSheet("Test Sheet"); // 탭 이름
 		
 		
 		// Sheet 에서 셀 취득
+		// A1
 		Cell cell = getCell(sheet, 0, 0);
-		
 		// cell에 데이터 작성
 		cell.setCellValue("TEST Result");
 		
+		// B1
 		cell = getCell(sheet, 0, 1);
 		cell.setCellValue(100);
 		
+		// C1
 		cell = getCell(sheet, 0, 2);
 		cell.setCellValue(Calendar.getInstance().getTime());
 		
 		
+		// C1의 셀에 스타일 지정 시작
 		// cell에 데이터 포맷 지정
 		CellStyle style = workbook.createCellStyle();
-		
+			
 		// 날짜 포맷
-		
-		
-		
+		style.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy h:mm"));
+				
 		// 정렬 포맷
+		style.setAlignment(HorizontalAlignment.CENTER);
+		style.setVerticalAlignment(VerticalAlignment.TOP);
+				
+		// 셀 색지정
+		style.setFillBackgroundColor(IndexedColors.GOLD.index);
+				
+		// 폰트 지정
+		Font font = workbook.createFont();
+		font.setColor(IndexedColors.RED.index);
+		cell.setCellStyle(style);
+		// C1의 셀에 스타일 지정 끝
+				
 		
-		/*
-		 // 셀에 데이터 포멧 지정
-CellStyle style = workbook.createCellStyle();
-// 날짜 포멧
-style.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy h:mm"));
-// 정렬 포멧
-style.setAlignment(HorizontalAlignment.CENTER);
-style.setVerticalAlignment(VerticalAlignment.TOP);
-// 셀 색지정
-style.setFillBackgroundColor(IndexedColors.GOLD.index);
-// 폰트 설정
-Font font = workbook.createFont();
-font.setColor(IndexedColors.RED.index);
-cell.setCellStyle(style);
-//셀 너비 자동 지정
-sheet.autoSizeColumn(0);
-sheet.autoSizeColumn(1);
-sheet.autoSizeColumn(2);
-cell = getCell(sheet, 1, 0);
-cell.setCellValue(1);
-cell = getCell(sheet, 1, 1);
-cell.setCellValue(2);
-cell = getCell(sheet, 1, 2);
-//함수식
-cell.setCellFormula("SUM(A2:B2)");
-writeExcel(workbook, "d:\\work\\test." + version);
-
-
-출처: https://nowonbun.tistory.com/639 [명월 일지]
-		 */
+		// 셀 너비 자동 지정
+		sheet.autoSizeColumn(0);
+		sheet.autoSizeColumn(1);
+		sheet.autoSizeColumn(2);
 		
+		// A2
+		cell = getCell(sheet, 1, 0);
+		cell.setCellValue(1);
+		
+		// B2
+		cell = getCell(sheet, 1, 1);
+		cell.setCellValue(2);
+		
+		// C2
+		cell = getCell(sheet, 1, 2);
+		// 함수식
+		cell.setCellFormula("SUM(A2:B2)");
+		
+		
+		// 엑셀파일 저장 (지정 위치에 'text.확장자' 로 저장, 지정위치 없을 경우 Error)
+		writeExcel(workbook, "C:\\Dev_Info\\work\\writeExcel." + version);
 		
 	}// End of Program()
 	
